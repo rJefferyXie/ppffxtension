@@ -1,4 +1,6 @@
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+import browser from 'webextension-polyfill';
+
+browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   fetch('https://ppffxtensionpw.onrender.com/api/mistral', {  // Updated API endpoint
     method: 'POST',
     headers: {
@@ -22,9 +24,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             const chunk = decoder.decode(value, { stream: true });
 
             // Send each chunk to the content script progressively
-            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
               if (tabs.length > 0) {
-                chrome.tabs.sendMessage(tabs[0].id, { streamChunk: chunk }); // Send chunk to content script
+                browser.tabs.sendMessage(tabs[0].id, { streamChunk: chunk }); // Send chunk to content script
               } else {
                 console.error('No active tab found');
               }

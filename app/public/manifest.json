@@ -2,12 +2,13 @@
   "manifest_version": 3,
   "name": "PostPallas",
   "version": "1.0",
+  "id": "8c0cf88db666bd0eb13754b326bca22f",
 
   "description": "Adds a red border to all webpages matching mozilla.org.",
 
   "icons": {
-    "48": "icons/icon-48.png",
-    "96": "icons/icon-96.png"
+    "48": "icon-48.png",
+    "96": "icon-96.png"
   },
 
   "permissions": [
@@ -28,9 +29,9 @@
 
   "content_scripts": [
     {
-      "matches": ["*://*.indeed.com/*", "*://*.linkedin.com/*", "*://*.google.com/*"],
-      "js": ["app.js", "userInfo.js"],
-      "css": ["styles.css", "userInfo.css"]
+      "matches": ["*://*.indeed.com/*", "*://*.linkedin.com/*"],
+      "js": ["static/js/content.js"],
+      "css": ["static/css/main.css"]
     }
   ]
 }
