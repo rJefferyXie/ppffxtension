@@ -21,7 +21,13 @@ const arrowDirections: ArrowDirectionMap = {
   "bottom": "top"
 }
 
-const UserPopup = () => {
+interface UserPopupInterface {
+  showUserProfile: Function
+}
+
+const UserPopup = (props: React.PropsWithChildren<UserPopupInterface>) => {
+  const { showUserProfile } = props;
+
   const [showPopup, setShowPopup] = useState(true);
   const [popupLocation, setPopupLocation] = useState("top-right");
   const [coverLetterText, setCoverLetterText] = useState('');
@@ -172,7 +178,7 @@ const UserPopup = () => {
           </h3>
 
           <div className="button-container">
-            <button className="view-profile-button">
+            <button className="view-profile-button" onClick={() => showUserProfile()}>
               View Profile
             </button>
 
