@@ -178,12 +178,12 @@ const UserPopup = (props: React.PropsWithChildren<UserPopupInterface>) => {
           </h3>
 
           <div className="button-container">
-            <button className="view-profile-button" onClick={() => showUserProfile()}>
-              View Profile
-            </button>
-
             <button className="hide-popup-button" onClick={togglePopup}>
               Hide Popup
+            </button>
+
+            <button className="view-profile-button" onClick={() => showUserProfile()}>
+              View Profile
             </button>
           </div>
         </div> :

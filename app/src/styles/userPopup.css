@@ -119,13 +119,13 @@
 
 .view-profile-button {
 	background-color: #0891b2;
-	margin: auto 2px auto 0px;
+	margin: auto 0px auto 2px;
 	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
 }
 
 .hide-popup-button {
 	background-color: #14b8a6;
-	margin: auto 0px auto 2px;
+	margin: auto 2px auto 0px;
 	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
 }
 
