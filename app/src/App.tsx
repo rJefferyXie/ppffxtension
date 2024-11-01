@@ -145,9 +145,8 @@ const App = () => {
   
   return (
     <div className="App">
-      <UserPopup showUserProfile={() => setShowUserProfile(true)}/>
-
-      {showUserProfile && <UserProfile/>}
+      {!showUserProfile && <UserPopup showUserProfile={() => setShowUserProfile(true)}/>}
+      {showUserProfile && <UserProfile hideUserProfile={() => setShowUserProfile(false)}/>}
     </div> 
   )
 };
