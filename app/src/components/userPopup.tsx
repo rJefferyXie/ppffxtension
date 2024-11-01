@@ -174,7 +174,7 @@ const UserPopup = (props: React.PropsWithChildren<UserPopupInterface>) => {
         showPopup ?
         <div className={`popup-container ${popupLocation}`}>
           <h3 className="popup-title">
-            Profile Information
+            PROFILE INFORMATION
           </h3>
 
           <div className="button-container">
