@@ -2,6 +2,7 @@ import "../styles/userProfile.css";
 
 import { useState, useEffect } from 'react';
 import browser from 'webextension-polyfill';
+import Navbar from "./navbar";
 
 interface UserProfileInterface {
   hideUserProfile: Function
@@ -10,6 +11,7 @@ interface UserProfileInterface {
 const UserProfile = (props: React.PropsWithChildren<UserProfileInterface>) => {
   const { hideUserProfile } = props;
   
+  const [activeTab, setActiveTab] = useState("About");
   const [skills, setSkills] = useState<string[]>([]);
   const [skillInput, setSkillInput] = useState('');
   const [coverLetterText, setCoverLetterText] = useState('');
@@ -62,19 +64,65 @@ const UserProfile = (props: React.PropsWithChildren<UserProfileInterface>) => {
   return (
     <div className="overlay">
       <div className="profile-container">
-        <div className="wrapper">
-          <div className="about-section">
-            <h2
-              className="about-title"
-              title="This information will be used to personalize cover letters."
-            >
-              ABOUT ME
-            </h2>
+        <Navbar activeTab={activeTab} setActiveTab={setActiveTab}></Navbar>
 
-            <input placeholder="Your Name...">
-            
-            </input>
+        <div className="section-container">
+          <div className="section-header">
+            <h3 className="section-text">
+              {activeTab}
+            </h3>
+
+            <p className="section-text">
+              {
+                activeTab === 'About' ? "This information will be used to personalize cover letters." :
+                activeTab === 'Skills' ? "Skills will be matched with job descriptions to assess fit and personalize cover letters." :
+                "Work experience and achievements that are relevant to the job description will be included in cover letters."
+               }
+            </p>
           </div>
+
+          <div className="wrapper">
+            {activeTab === "About" && 
+              <div className="about-section">
+                <h3>ABOUT</h3>
+
+                <div className="input-container">
+                  <h4 className="input-header">Name - </h4>
+                  <input placeholder="First and Last Name..."></input>
+                </div>
+                
+                <div className="input-container">
+                  <h4 className="input-header">Location - </h4>
+                  <input placeholder="City, Province / State..."></input>
+                </div>
+
+                <div className="input-container">
+                  <h4 className="input-header">Email Address - </h4>
+                  <input placeholder="Your Email Address..."></input>
+                </div>
+
+                <div className="education-container">
+                  <h3>EDUCATION</h3>
+
+                  <div className="input-container">
+                    <h4 className="input-header">Degree Title - </h4>
+                    <input placeholder="Diploma / Degree..."></input>
+                  </div>
+
+                  <div className="input-container">
+                    <h4 className="input-header">School / University - </h4>
+                    <input placeholder="School / University..."></input>
+                  </div>
+                </div>
+
+                <div>
+                  <h3>CERTIFICATES</h3>
+                </div>
+              </div>
+            }
+        </div>
+
+          {/* 
 
           <div className="skills-section">
             <h2
@@ -84,23 +132,25 @@ const UserProfile = (props: React.PropsWithChildren<UserProfileInterface>) => {
               KEY SKILLS
             </h2>
 
-            <div className="add-skill-wrapper">
-              <input 
-                className="add-skill-input"
-                placeholder='Add a skill... (ex. Microsoft Word)'
-                value={skillInput}
-                onChange={(e) => setSkillInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') addSkill();
-                }}
-              />
+            <div className="edit-skill-wrapper">
+              <div className="add-skill-wrapper">
+                <input 
+                  className="add-skill-input"
+                  placeholder='Add a skill... (ex. Microsoft Word)'
+                  value={skillInput}
+                  onChange={(e) => setSkillInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') addSkill();
+                  }}
+                />
 
-              <button 
-                className="add-skill-button"
-                onClick={addSkill}
-              >
-                Add Skill
-              </button>
+                <button 
+                  className="add-skill-button"
+                  onClick={addSkill}
+                >
+                  Add Skill
+                </button>
+              </div>
 
               <button 
                 className="clear-skills-button"
@@ -142,7 +192,7 @@ const UserProfile = (props: React.PropsWithChildren<UserProfileInterface>) => {
 
         <p 
           className="profile-explanation-button"
-          title="Completing your profile helps the extension create more tailored cover letters and better match your skills with job descriptions. You can skip sections, but it may impact the performance of the extension."
+          title="Completing your profile helps the extension create more tailored cover letters and better match your skills with job descriptions. You can skip any input field that you want, but it may impact the performance of the extension."
         >
           Why fill this out?
         </p>
@@ -160,7 +210,7 @@ const UserProfile = (props: React.PropsWithChildren<UserProfileInterface>) => {
             onClick={() => {}}
           >
             Save Changes
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

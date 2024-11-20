@@ -11,27 +11,72 @@
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 999;
+  box-sizing: border-box;
+}
+
+input {
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.input-header {
+  margin: 0 !important;
+}
+
+.input-container {
+  display: flex;
+  margin: 0 !important;
 }
 
 /* Profile container styling */
 .profile-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: min(80%, 1080px);
-  height: min(80%, 720px);
+  width: 95%;
+  height: 95%;
+  margin: auto;
   background-color: rgb(245, 245, 245);
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
   z-index: 9999;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.section-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: calc(100% - 13rem);
+  overflow: hidden;
+}
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 5rem;
+  padding: 0 2rem;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.section-text {
+  margin: 0;
 }
 
 /* Wrapper styling */
 .wrapper {
   display: flex;
-  width: 100%;
-  height: 37%;
+  width: calc(100% - 5.5rem);
+  height: calc(100% - 10rem);
+  margin: auto;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  padding: 2rem;
 }
 
 /* About and skills section styling */
@@ -40,38 +85,31 @@
 .experience-section {
   display: flex;
   flex-direction: column;
-  width: 50%;
-  background-color: white;
-  border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 0.5rem;
-}
-
-.about-section {
-  margin-right: 0.5rem;
-}
-
-.skills-section {
-  margin-left: 0.5rem;
-}
-
-.about-title,
-.skills-title,
-.experience-title {
-  margin: 0 auto;
+  width: 100%;
+  height: 100%;
 }
 
 /* Add skill input and button styling */
-.add-skill-wrapper {
+.edit-skill-wrapper {
   display: flex;
   width: 95%;
-  margin: 4px auto;
+  margin: 0 auto;
+  padding: .5rem .25rem 0;
+  height: 3rem;
+}
+
+.add-skill-wrapper {
+  display: flex;
+  background-color: #52525b;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  margin: 0 auto 0 0;
 }
 
 .add-skill-input {
   width: 50%;
   padding: 4px 8px;
-  margin: auto 0.25rem auto auto;
+  margin: auto auto auto 0.25rem;
   outline: none;
   border: none;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -80,6 +118,7 @@
 .add-skill-button {
   background-color: #14b8a6;
   width: fit-content;
+  margin: auto auto auto 4px;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
 }
 
@@ -88,6 +127,7 @@
   background-color: #dc2626;
   width: fit-content;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+  margin: auto 0 auto auto;
 }
 
 /* Skills wrapper and skill item styling */
@@ -98,10 +138,9 @@
   overflow: auto;
   width: 95%;
   height: 100%;
-  margin: 0.5rem auto;
+  margin: 0 auto;
   padding: 0.5rem 0.25rem;
-  border-top: 1px solid gray;
-  border-bottom: 1px solid gray;
+  background-color: #52525b;
 }
 
 .skill {
@@ -115,12 +154,6 @@
 .experience-section {
   margin: 1rem 0;
   width: calc(100% - 1rem);
-}
-
-.profile-explanation-button {
-  color: blue;
-  text-decoration: underline;
-  margin: auto auto 4px;
 }
 
 /* Button container and individual button styling */
