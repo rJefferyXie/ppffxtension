@@ -1,6 +1,7 @@
 import "../styles/userPopup.css";
 import { useState, useEffect } from 'react';
 import browser from 'webextension-polyfill';
+import EmojiNatureIcon from '@mui/icons-material/EmojiNature';
 
 interface ResponseType {
   error?: string;
@@ -173,9 +174,9 @@ const UserPopup = (props: React.PropsWithChildren<UserPopupInterface>) => {
       {
         showPopup ?
         <div className={`popup-container ${popupLocation}`}>
-          <h3 className="popup-title">
-            PROFILE INFORMATION
-          </h3>
+          <div className="popup-text">
+            <h3 className="logo-name">PALLAS</h3>
+          </div>
 
           <div className="button-container">
             <button className="hide-popup-button" onClick={togglePopup}>
@@ -190,7 +191,7 @@ const UserPopup = (props: React.PropsWithChildren<UserPopupInterface>) => {
         <div className={`show-popup-container ${popupLocation}`}>
           <button className='show-popup-button' onClick={togglePopup}>
             <h2 className="show-popup-logo">
-              𝓹
+              <EmojiNatureIcon></EmojiNatureIcon>
             </h2>
           </button>
             
