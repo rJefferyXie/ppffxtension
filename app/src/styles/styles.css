@@ -9,6 +9,12 @@
 
 .App {
   position: relative;
+  font-size: 16px;
+  font-family: Verdana, sans-serif;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
 }
 
 button {
