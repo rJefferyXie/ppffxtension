@@ -14,22 +14,6 @@
   box-sizing: border-box;
 }
 
-input {
-  outline: none;
-  border: none;
-  border-radius: 0.5rem;
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-.input-header {
-  margin: 0 !important;
-}
-
-.input-container {
-  display: flex;
-  margin: 0 !important;
-}
-
 /* Profile container styling */
 .profile-container {
   display: flex;
@@ -79,101 +63,9 @@ input {
   padding: 2rem;
 }
 
-/* About and skills section styling */
-.about-section,
-.skills-section,
-.experience-section {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-}
-
-/* Add skill input and button styling */
-.edit-skill-wrapper {
-  display: flex;
-  width: 95%;
-  margin: 0 auto;
-  padding: .5rem .25rem 0;
-  height: 3rem;
-}
-
-.add-skill-wrapper {
-  display: flex;
-  background-color: #52525b;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
-  margin: 0 auto 0 0;
-}
-
-.add-skill-input {
-  width: 50%;
-  padding: 4px 8px;
-  margin: auto auto auto 0.25rem;
-  outline: none;
-  border: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-.add-skill-button {
-  background-color: #14b8a6;
-  width: fit-content;
-  margin: auto auto auto 4px;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
-}
-
-/* Clear skills button styling */
-.clear-skills-button {
-  background-color: #dc2626;
-  width: fit-content;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
-  margin: auto 0 auto auto;
-}
-
-/* Skills wrapper and skill item styling */
-.skills-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  overflow: auto;
-  width: 95%;
-  height: 100%;
-  margin: 0 auto;
-  padding: 0.5rem 0.25rem;
-  background-color: #52525b;
-}
-
-.skill {
-  background-color: #0891b2;
-  margin: 4px;
-  width: calc(33% - 8px);
-  height: fit-content;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
-}
-
-.experience-section {
-  margin: 1rem 0;
-  width: calc(100% - 1rem);
-}
-
-/* Button container and individual button styling */
-.button-container {
+.exit-profile-button {
   display: flex;
   margin: 4px auto;
-}
-
-.exit-profile-button,
-.save-changes-button {
-  margin: auto 4px;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
-}
-
-.exit-profile-button {
   background-color: #dc2626;
-  margin-left: auto;
-}
-
-.save-changes-button {
-  background-color: #14b8a6;
-  margin-right: auto;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
 }
