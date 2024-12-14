@@ -20,7 +20,7 @@ const Navbar = (props: React.PropsWithChildren<NavbarProps>) => {
         <h3 className="logo-name">PALLAS</h3>
       </div>
 
-      <ul className="navbar-item-container">
+      <div className="navbar-item-container">
         <div className={`${activeTab === "About" ? 'active-tab' : 'navbar-item'}`} onClick={() => setActiveTab("About")}>
           <AccountCircleIcon></AccountCircleIcon>
           <p className="item-text">About Me</p>
@@ -35,7 +35,7 @@ const Navbar = (props: React.PropsWithChildren<NavbarProps>) => {
           <WorkIcon></WorkIcon>
           <p className="item-text">Work Experience</p>
         </div>
-      </ul>
+      </div>
 
       <p 
         className="profile-explanation-text"
