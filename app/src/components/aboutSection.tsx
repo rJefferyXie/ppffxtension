@@ -125,8 +125,8 @@ const AboutSection = () => {
                 updateEducation(index, "school", e.target.value)
               }
             />
-            {education.length > 1 && (
-              <Button className="remove-button" variant="outlined" color="error" startIcon={<Clear />} onClick={() => removeEducation(index)}>Remove</Button>
+            {education.length > 1 && index > 0 && (
+              <Button className="remove-button" variant="outlined" color="error" onClick={() => removeEducation(index)}>{<Clear/>}</Button>
             )}
           </div>
         ))}
@@ -154,8 +154,8 @@ const AboutSection = () => {
               value={entry.issuer}
               onChange={(e) => updateCertificate(index, "issuer", e.target.value)}
             />
-            {certificates.length > 1 && (
-              <Button className="remove-button" variant="outlined" color="error" startIcon={<Clear />} onClick={() => removeCertificate(index)}>Remove</Button>
+            {certificates.length > 1 && index > 0 && (
+              <Button className="remove-button" variant="outlined" color="error" onClick={() => removeCertificate(index)}>{<Clear/>}</Button>
             )}
           </div>
         ))}
