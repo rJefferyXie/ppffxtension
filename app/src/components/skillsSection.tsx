@@ -49,14 +49,14 @@ const SkillsSection = () => {
             <TextField
               className="input-field"
               label="Skill"
-              placeholder="Skill (e.g., JavaScript, Microsoft Word...)"
+              placeholder="Skill (ex., JavaScript, Microsoft Word...)"
               value={skill.name}
               onChange={(e) => updateSkill(index, "name", e.target.value)}
             />
             <TextField
               className="input-field"
               label="Years of Experience"
-              placeholder="Optional (e.g., 2 years)..."
+              placeholder="Optional (ex., 2 years)..."
               value={skill.experience}
               onChange={(e) => updateSkill(index, "experience", e.target.value)}
             />
