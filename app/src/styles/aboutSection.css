@@ -10,17 +10,6 @@
   margin: 0 0 1rem;
 }
 
-.add-button {
-  width: fit-content !important;
-  margin: 0 0 0.75rem !important;
-}
-
-.remove-button {
-  width: fit-content !important;
-  height: fit-content !important;
-  margin: auto 0 !important;
-}
-
 .input-info {
   margin: 0 !important;
 }
@@ -29,10 +18,6 @@
   display: flex;
   flex-wrap: wrap;
   margin: 0.75rem 0;
-}
-
-.section-title {
-  margin: 0 !important;
 }
 
 .input-field {
