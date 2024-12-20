@@ -1,17 +1,18 @@
 import "../styles/navbar.css";
 
+import { Button } from "@mui/material";
 import EmojiNatureIcon from '@mui/icons-material/EmojiNature';
 import WorkIcon from '@mui/icons-material/Work';
-import EqualizerIcon from '@mui/icons-material/Equalizer';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 interface NavbarProps {
   activeTab: string,
-  setActiveTab: Function;
+  setActiveTab: Function,
+  hideUserProfile: Function
 }
 
 const Navbar = (props: React.PropsWithChildren<NavbarProps>) => {
-  const { activeTab, setActiveTab } = props;
+  const { activeTab, setActiveTab, hideUserProfile } = props;
 
   return (
     <div className="navbar-container">
@@ -26,14 +27,9 @@ const Navbar = (props: React.PropsWithChildren<NavbarProps>) => {
           <p className="item-text">About Me</p>
         </div>
 
-        <div className={`${activeTab === "Skills" ? 'active-tab' : 'navbar-item'}`} onClick={() => setActiveTab("Skills")}>
-          <EqualizerIcon></EqualizerIcon>
-          <p className="item-text">Skills</p>
-        </div>
-
-        <div className={`${activeTab === "Work Experience" ? 'active-tab' : 'navbar-item'}`} onClick={() => setActiveTab("Work Experience")}>
+        <div className={`${activeTab === "Resume" ? 'active-tab' : 'navbar-item'}`} onClick={() => setActiveTab("Resume")}>
           <WorkIcon></WorkIcon>
-          <p className="item-text">Work Experience</p>
+          <p className="item-text">Resume</p>
         </div>
       </div>
 
@@ -43,6 +39,15 @@ const Navbar = (props: React.PropsWithChildren<NavbarProps>) => {
       >
         Why fill this out?
       </p>
+
+      <Button 
+        className="exit-button" 
+        color="error"
+        variant="outlined"
+        onClick={() => hideUserProfile()}
+      >
+        EXIT
+      </Button>
     </div>
   )
 }
