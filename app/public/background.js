@@ -1,4 +1,4 @@
-import browser from 'webextension-polyfill';
+/* eslint-disable no-undef */
 
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   fetch('https://ppffxtensionpw.onrender.com/api/mistral', {  // Updated API endpoint
