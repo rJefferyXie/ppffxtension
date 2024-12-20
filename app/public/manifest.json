@@ -20,7 +20,7 @@
   ],
 
   "host_permissions": [
-    "https://ppffxtensionpw.vercel.app/"
+    "https://ppffxtensionpw.onrender.com/*"
   ],
   
   "background": {
