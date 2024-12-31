@@ -93,6 +93,8 @@ const ResumeSection: React.FC = () => {
     setter: React.Dispatch<React.SetStateAction<Entry[]>>,
     template: Entry = defaultEntry
   ) => {
+    if (setter === setWorkExperiences && workExperiences.length >= 3) return;
+    if (setter === setProjects && projects.length >= 3) return;
     setter((prev) => [...prev, { ...template }]);
   };
 
@@ -164,8 +166,13 @@ const ResumeSection: React.FC = () => {
             multiline
             minRows={3}
             value={entry.description}
-            onChange={(e) => updateList(entries, setter, index, "description", e.target.value)}
+            onChange={(e) => {
+              if (e.target.value.length <= 1000) {
+                updateList(entries, setter, index, "description", e.target.value);
+              }
+            }}
           />
+          <p>{entry.description.length}/1000 characters</p>
         </div>
       </div>
     ))
@@ -182,6 +189,7 @@ const ResumeSection: React.FC = () => {
             className="add-button"
             startIcon={<Add/>}
             onClick={() => addToList(setWorkExperiences)}
+            disabled={workExperiences.length >= 3}
           >
             Add Work Experience
           </Button>
@@ -195,6 +203,7 @@ const ResumeSection: React.FC = () => {
             className="add-button"
             startIcon={<Add/>}
             onClick={() => addToList(setProjects)}
+            disabled={projects.length >= 3}
           >
             Add Project
           </Button>
