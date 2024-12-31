@@ -19,9 +19,11 @@ interface CertificateInterface {
 const AboutSection = () => {
   const [name, setName] = useState(localStorage.getItem("name") || "");
   const [location, setLocation] = useState(localStorage.getItem("location") || "");
+
   const [education, setEducation] = useState<EducationInterface[]>(
     JSON.parse(localStorage.getItem("education") || '[{"degree":"","school":""}]')
   );
+  
   const [certificates, setCertificates] = useState<CertificateInterface[]>(
     JSON.parse(localStorage.getItem("certificates") || '[{"name":"","issuer":""}]')
   );
