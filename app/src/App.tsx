@@ -11,8 +11,22 @@ interface ResponseType {
   error?: string;
 }
 
-interface StreamResponse {
-  streamChunk?: string;
+interface EducationInterface {
+  degree: string;
+  school: string;
+}
+
+interface CertificateInterface {
+  name: string;
+  issuer: string;
+}
+
+interface Entry {
+  title: string;
+  company?: string;
+  description: string;
+  startDate: string;
+  endDate: string;
 }
 
 interface Skill {
@@ -24,6 +38,14 @@ interface Skill {
 const EXPIRATION_TIME = 3 * 24 * 60 * 60 * 1000; // Expiration time for job data (3 days in milliseconds)
 
 const App = () => {
+  const defaultEntry: Entry = {
+    title: "",
+    company: "",
+    description: "",
+    startDate: "",
+    endDate: "",
+  };
+
   const defaultSkill: Skill = {
     name: "",
     experience: ""
@@ -31,23 +53,42 @@ const App = () => {
 
   const [showUserProfile, setShowUserProfile] = useState(false);
   
-  const [skills, setSkills] = useState<Skill[]>(
-    JSON.parse(localStorage.getItem("skills") || "[]") || [defaultSkill]
-  );
+  const name = localStorage.getItem("name") || "";
+  const location = localStorage.getItem("location") || "";
+  const education: EducationInterface[] = JSON.parse(localStorage.getItem("education") || '[{"degree":"","school":""}]');
+  const certificates: CertificateInterface[] =JSON.parse(localStorage.getItem("certificates") || '[{"name":"","issuer":""}]');
+  
 
-  const generateCoverLetter = () => {
-    const userdata = `WORK EXPERIENCE VRETTA | SOFTWARE DEVELOPER SEP 2022 to APR 2023 
+  const workExperiences: Entry[] = JSON.parse(localStorage.getItem("workExperiences") || "[]") || [defaultEntry];
+  const projects: Entry[] = JSON.parse(localStorage.getItem("projects") || "[]") || [defaultEntry];
+  const skills: Skill[] = JSON.parse(localStorage.getItem("skills") || "[]") || [defaultSkill];
+  
+
+  /* `WORK EXPERIENCE VRETTA | SOFTWARE DEVELOPER SEP 2022 to APR 2023 
       Enhanced the e-learning experience for students across Canada through a web application that runs standardized
       provincial tests, supporting thousands of daily users with varying devices, browsers, and learning accommodations.
-  
+
       Developed Python, SQL, and shell scripts to automatically create and insert thousands of student and
       teacher accounts into the database every semester, significantly reducing the data processing time by 32%.
-  
+
       Implemented real-time features including chat systems, user presence detection, and online/offline
       indicators, scaling to hundreds of concurrent users utilizing AWS Lambda, DynamoDB, and WebSockets.
-  
+
       Conducted load testing on critical application components with K6 and automated tests with Selenium and
-      Browser Stack, optimizing regression testing efficiency by saving 2-3 hours of manual effort per cycle.`
+      Browser Stack, optimizing regression testing efficiency by saving 2-3 hours of manual effort per cycle.
+  */
+
+
+  const generateCoverLetter = () => {
+    const userdata = {
+      name: name,
+      location: location,
+      education: education,
+      certificates: certificates,
+      skills: skills,
+      projects: projects,
+      workExperiences: workExperiences
+    }
   
     const jobDescription = `Full job description
     
@@ -91,16 +132,23 @@ const App = () => {
         Flexible working hours and hybrid work options.
     `
   
-    const prompt = `Write a professional cover letter for a software developer. User Data: ${userdata}, Job Description: ${jobDescription}`;
+    const prompt = `
+      Write a professional cover letter for a software developer. 
+      This is the user information that was provided: ${JSON.stringify(userdata)} 
+      This is the job description: ${jobDescription}
+    `;
   
     // Create structured messages for the Mistral API
     const messages = [
       { 
         role: 'system', 
         content: `You are a helpful assistant that writes professional cover letters. 
+                  Never make up fake information about what the user knows. Do not include any skills or work experience that the user did not list.
                   The cover letters should be two to three short paragraphs in length depending on the job relevancy, and you do not need to include the address portions. 
-                  When listing the bullet points from the users data you do not need to cite it word for word.
-                  Try to make the cover letter look like a human wrote it and make it readable and easy to understand.
+                  When listing the bullet points from the users data do not cite it word for word.
+                  Focus on work experience and projects more than the skills in the cover letters if provided.
+                  Sign the cover letter with the user's name if provided.
+                  Make the cover letter look like a human wrote it and make it readable and easy to understand.
                   Only use the data from the user's data if it directly relates to the job description.` 
       },
   
