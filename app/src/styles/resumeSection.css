@@ -106,3 +106,26 @@
   height: 36px !important;
   margin: auto 0 !important;
 }
+
+@media screen and (max-width: 960px) {
+  .resume-container {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .experience-input-field {
+    width: 75%;
+  }
+
+  .experience-input-field-date {
+    width: 50%;
+  }
+
+  .experience-section {
+    overflow-y: initial;
+  }
+
+  .skill-section {
+    overflow-y: initial;
+  }
+}
