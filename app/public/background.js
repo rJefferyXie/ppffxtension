@@ -18,6 +18,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
           reader.read().then(({ done, value }) => {
             if (done) {
               console.log('Stream complete');
+              sendResponse({ success: true, chunks }); // Send the collected chunks
               return;
             }
 
