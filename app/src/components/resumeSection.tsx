@@ -30,16 +30,29 @@ const ResumeSection: React.FC = () => {
     experience: ""
   }
 
+  const initializeEntries = (key: string, defaultEntry: Entry | Skill) => {
+    const savedData = localStorage.getItem(key);
+
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      if (Array.isArray(parsedData) && parsedData.length > 0) {
+        return parsedData;
+      }
+    }
+
+    return [defaultEntry];
+  };
+
   const [workExperiences, setWorkExperiences] = useState<Entry[]>(
-    JSON.parse(localStorage.getItem("workExperiences") || "[]") || [defaultEntry]
+    initializeEntries("workExperiences", defaultEntry)
   );
 
   const [projects, setProjects] = useState<Entry[]>(
-    JSON.parse(localStorage.getItem("projects") || "[]") || [defaultEntry]
+    initializeEntries("projects", defaultEntry)
   );
 
   const [skills, setSkills] = useState<Skill[]>(
-    JSON.parse(localStorage.getItem("skills") || "[]") || [defaultSkill]
+    initializeEntries("skills", defaultSkill)
   );
 
   useEffect(() => {

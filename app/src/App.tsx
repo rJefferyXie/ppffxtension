@@ -56,7 +56,6 @@ const App = () => {
   const location = localStorage.getItem("location") || "";
   const education: EducationInterface[] = JSON.parse(localStorage.getItem("education") || '[{"degree":"","school":""}]');
   const certificates: CertificateInterface[] =JSON.parse(localStorage.getItem("certificates") || '[{"name":"","issuer":""}]');
-  
 
   const workExperiences: Entry[] = JSON.parse(localStorage.getItem("workExperiences") || "[]") || [defaultEntry];
   const projects: Entry[] = JSON.parse(localStorage.getItem("projects") || "[]") || [defaultEntry];
