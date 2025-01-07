@@ -1,6 +1,9 @@
 import "../styles/userPopup.css";
+
 import { useState, useEffect } from 'react';
 import browser from 'webextension-polyfill';
+
+import { Button } from "@mui/material";
 import EmojiNatureIcon from '@mui/icons-material/EmojiNature';
 
 interface ArrowDirectionMap {
@@ -23,7 +26,7 @@ const UserPopup = (props: React.PropsWithChildren<UserPopupInterface>) => {
 
   const [showPopup, setShowPopup] = useState(true);
   const [popupLocation, setPopupLocation] = useState("top-right");
-  const [coverLetterText, setCoverLetterText] = useState('dwhauidhaiudawhduiwahdui');
+  const [coverLetterText, setCoverLetterText] = useState('cvcvcvcvvcvvcvcvcv');
 
   useEffect(() => {
     const shouldShowPopup = localStorage.getItem("showPopup");
@@ -46,7 +49,6 @@ const UserPopup = (props: React.PropsWithChildren<UserPopupInterface>) => {
   }
 
   useEffect(() => {
-    // Listen for streamed chunks sent from the background script
     const handleStreamResponse = (streamResponse: any) : true | undefined => {
       if (streamResponse.streamChunk) {
         setCoverLetterText(prev => prev + streamResponse.streamChunk.replace(/<br>/g, '\n'));
@@ -55,7 +57,6 @@ const UserPopup = (props: React.PropsWithChildren<UserPopupInterface>) => {
       return true;
     };
 
-    // Listen for streamed chunks sent from the background script
     browser.runtime.onMessage.addListener(handleStreamResponse);
 
     // Cleanup the event listener on component unmount
@@ -75,12 +76,17 @@ const UserPopup = (props: React.PropsWithChildren<UserPopupInterface>) => {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url); // Free up memory
+
+    clearCoverLetter();
+  }
+
+  const clearCoverLetter = () => {
+    setCoverLetterText('');
   }
 
   return (
     <div>
-      {
-        showPopup ?
+      {showPopup ?
         <div className={`popup-container ${popupLocation}`}>
           <div className="popup-text">
             <h3 className="logo-name">PALLAS</h3>
@@ -103,48 +109,63 @@ const UserPopup = (props: React.PropsWithChildren<UserPopupInterface>) => {
             </h2>
           </button>
             
-          {
-            popupLocation.includes("top") && 
+          {popupLocation.includes("top") && 
             <button className="popup-arrow bottom-arrow" onClick={() => movePopup("bottom")}>
               ↓
             </button>
           }
 
-          {
-            popupLocation.includes("right") && 
+          {popupLocation.includes("right") && 
             <button className="popup-arrow left-arrow" onClick={() => movePopup("left")}>
               ←
             </button>
           }
 
-          {
-            popupLocation.includes("left") && 
+          {popupLocation.includes("left") && 
             <button className="popup-arrow right-arrow" onClick={() => movePopup("right")}>
               →
             </button>
           }
 
-          {
-            popupLocation.includes("bottom") && 
+          {popupLocation.includes("bottom") && 
             <button className="popup-arrow top-arrow" onClick={() => movePopup("top")}>
               ↑
             </button>
           }
         </div>
-
       }
 
-      {coverLetterText}
-{/* 
-      <div className="cover-letter-div">
-        <p>
-          Dear Hiring Manager, I am writing to express my interest in the Software Developer position at your esteemed company, as advertised. With over five years of experience in software development, specializing in Python and JavaScript, I am confident that my skills and passion align perfectly with the role's requirements. I have a proven track record of designing, developing, and maintaining efficient, reusable, and reliable code using these languages. In my previous role at XYZ Corporation, I led a team to successfully migrate our core platform to Python, resulting in a 30% improvement in performance. I am also proficient in various frameworks and libraries, including Django, Flask, React, and Node.js. I am particularly drawn to your company because of its reputation for fostering innovation and continuous learning. I am eager to bring my unique blend of technical expertise and problem-solving skills to your team, contributing to the development of cutting-edge software solutions. Thank you for considering my application. I look forward to the possibility of discussing how my background and skills would make me a strong fit for your position. Sincerely, [Your Name]
-        </p>
+      {coverLetterText && 
+        <div className="cover-letter-div">
+          <h3 className="section-title">
+            GENERATED COVER LETTER
+          </h3>
 
-        <button className="save-button" onClick={saveCoverLetter}>
-          Save Cover Letter
-        </button>
-      </div> */}
+          <p className="cover-letter-text">
+            {coverLetterText}
+          </p>
+
+          <div className="button-container">
+            <Button
+              className="exit-cv-button"
+              variant="outlined"
+              color="error"
+              onClick={clearCoverLetter}
+            >
+              EXIT WITHOUT SAVING
+            </Button>
+
+            <Button 
+              className="add-button" 
+              variant="outlined"
+              onClick={saveCoverLetter}
+            >
+              SAVE COVER LETTER
+            </Button>
+          </div>
+        </div>
+      }
+
     </div>
   )
 }
