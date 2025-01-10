@@ -1,6 +1,7 @@
 import "../styles/aboutSection.css";
 
 import { useState, useEffect } from "react";
+import { encryptData, decryptData } from "../utils/encryption";
 
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
@@ -16,28 +17,34 @@ interface CertificateInterface {
   issuer: string;
 }
 
-const AboutSection = () => {
-  const [name, setName] = useState(localStorage.getItem("name") || "");
-  const [location, setLocation] = useState(localStorage.getItem("location") || "");
+interface AboutSectionInterface {
+  password: string
+}
+
+const AboutSection = (props: React.PropsWithChildren<AboutSectionInterface>) => {
+  const { password } = props;
+
+  const [name, setName] = useState(decryptData(localStorage.getItem("name") || '', password) || "");
+  const [location, setLocation] = useState(decryptData(localStorage.getItem("location") || '', password) || "");
 
   const [education, setEducation] = useState<EducationInterface[]>(
-    JSON.parse(localStorage.getItem("education") || '[{"degree":"","school":""}]')
+    JSON.parse(decryptData(localStorage.getItem("education") || '', password) || '[{"degree":"","school":""}]')
   );
   
   const [certificates, setCertificates] = useState<CertificateInterface[]>(
-    JSON.parse(localStorage.getItem("certificates") || '[{"name":"","issuer":""}]')
+    JSON.parse(decryptData(localStorage.getItem("certificates") || '', password) || '[{"name":"","issuer":""}]')
   );
 
   // Auto-save changes to localStorage
   useEffect(() => {
     const timeout = setTimeout(() => {
-      localStorage.setItem("name", name);
-      localStorage.setItem("location", location);
-      localStorage.setItem("education", JSON.stringify(education));
-      localStorage.setItem("certificates", JSON.stringify(certificates));
+      localStorage.setItem("name", encryptData(name, password));
+      localStorage.setItem("location", encryptData(location, password));
+      localStorage.setItem("education", encryptData(JSON.stringify(education), password));
+      localStorage.setItem("certificates", encryptData(JSON.stringify(certificates), password));
     }, 500); // Save after 500ms of no typing
     return () => clearTimeout(timeout);
-  }, [name, location, education, certificates]);
+  }, [name, location, education, certificates, password]);
 
   const addEducation = () => {
     setEducation([...education, { degree: "", school: "" }]);
