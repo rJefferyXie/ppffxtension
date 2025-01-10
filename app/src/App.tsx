@@ -29,7 +29,7 @@ const App = () => {
   const [certificates, setCertificates] = useState([]);
   const [workExperiences, setWorkExperiences] = useState([]);
   const [projects, setProjects] = useState([]);
-  const [skills, setSkills] = useState<Skill[]>([]);
+  const [skills, setSkills] = useState<Skill[]>(JSON.parse(localStorage.getItem("skills") || '[]'));
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -52,8 +52,7 @@ const App = () => {
     const encryptedProjects = localStorage.getItem("projects") || '';
     setProjects(JSON.parse(decryptData(encryptedProjects, password) || '[]'));
 
-    const encryptedSkills = localStorage.getItem("skills") || '';
-    setSkills(JSON.parse(decryptData(encryptedSkills, password) || '[]'));
+    setSkills(JSON.parse(localStorage.getItem("skills") || '[]'));
 
   }, [isAuthenticated, password]);
 
@@ -181,11 +180,11 @@ const App = () => {
 
       displayResultBox(selectedJobDiv, matchedKeywords, relevanceScore);
       saveJobResult(selectedJobLink, matchedKeywords, relevanceScore);
-      addGenerateButton(selectedJobDiv, jobDescription);
+      addGenerateButton(jobDescription);
     };
 
-    const addGenerateButton = (selectedJobDiv: HTMLElement, jobDescription: string) => {
-      const jobOptionsDiv: HTMLElement | null = document.querySelector('.css-1jzia5w');
+    const addGenerateButton = (jobDescription: string) => {
+      const jobOptionsDiv: HTMLElement | null = document.querySelector('.jobsearch-ViewJobButtons-container');
       if (jobOptionsDiv && !jobOptionsDiv.querySelector('.generate-cv-button')) {
         const generateCVDiv = document.createElement('div');
         generateCVDiv.className = 'generate-cv-button-container';
