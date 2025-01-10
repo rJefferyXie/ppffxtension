@@ -37,7 +37,7 @@ const ResumeSection = (props: React.PropsWithChildren<ResumeSectionInterface>) =
     experience: ""
   }
 
-  const initializeEntries = (key: string, defaultEntry: Entry | Skill) => {
+  const initializeEntries = (key: string, defaultEntry: Entry) => {
     const savedData = localStorage.getItem(key);
 
     if (savedData) {
@@ -50,6 +50,19 @@ const ResumeSection = (props: React.PropsWithChildren<ResumeSectionInterface>) =
     return [defaultEntry];
   };
 
+  const initializeSkills = (key: string, defaultEntry: Skill) => {
+    const savedData = localStorage.getItem(key);
+
+    if (savedData) {
+      const parsedData = JSON.parse(savedData || '');
+      if (Array.isArray(parsedData) && parsedData.length > 0) {
+        return parsedData;
+      }
+    }
+
+    return [defaultEntry];
+  }
+
   const [workExperiences, setWorkExperiences] = useState<Entry[]>(
     initializeEntries("workExperiences", defaultEntry)
   );
@@ -59,14 +72,14 @@ const ResumeSection = (props: React.PropsWithChildren<ResumeSectionInterface>) =
   );
 
   const [skills, setSkills] = useState<Skill[]>(
-    initializeEntries("skills", defaultSkill)
+    initializeSkills("skills", defaultSkill)
   );
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       localStorage.setItem("workExperiences", encryptData(JSON.stringify(workExperiences), password));
       localStorage.setItem("projects", encryptData(JSON.stringify(projects), password));
-      localStorage.setItem("skills", encryptData(JSON.stringify(skills), password));
+      localStorage.setItem("skills", JSON.stringify(skills));
     }, 500);
     return () => clearTimeout(timeout);
   }, [workExperiences, projects, skills, password]);
