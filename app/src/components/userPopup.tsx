@@ -26,7 +26,7 @@ const UserPopup = (props: React.PropsWithChildren<UserPopupInterface>) => {
 
   const [showPopup, setShowPopup] = useState(true);
   const [popupLocation, setPopupLocation] = useState("top-right");
-  const [coverLetterText, setCoverLetterText] = useState('cvcvcvcvvcvvcvcvcv');
+  const [coverLetterText, setCoverLetterText] = useState('');
 
   useEffect(() => {
     const shouldShowPopup = localStorage.getItem("showPopup");
