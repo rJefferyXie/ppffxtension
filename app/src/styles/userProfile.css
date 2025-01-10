@@ -16,13 +16,21 @@
 .profile-wrapper {
   display: flex;
   flex-direction: column;
-  width: 70%;
-  height: 40%;
+  width: 60%;
+  height: 35%;
   margin: auto;
   padding: 1rem;
   border-radius: 1rem;
   box-shadow: 0 0px 5px rgba(0, 0, 0, 0.27);
   overflow-y: auto;
+}
+
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  margin: 1rem auto;
 }
 
 .profile-input-wrapper {
@@ -35,23 +43,15 @@
 
 .account-input-field {
   width: max(50%, 420px);
-  margin: 0.5rem 0;
+  margin: 0.5rem auto;
 }
 
-.password-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+.password-help-text {
+  margin: 0.25rem auto 0;
 }
 
-.password-input-wrapper {
-  display: flex;
-  width: 100%;
-  align-items: center;
-}
-
-.show-password-text, .password-help-text {
-  margin: 0 0 0 0.5rem;
+.reset-profile-text {
+  margin: 0 auto auto;
 }
 
 .profile-create-wrapper {
@@ -59,7 +59,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: auto auto;
+  margin: auto;
 }
 
 .profile-container {

@@ -3,7 +3,9 @@ import "../styles/userProfile.css";
 import { useState, useEffect } from 'react';
 import { encryptData, decryptData } from "../utils/encryption";
 
-import { TextField, Button, Checkbox, Alert, Snackbar } from "@mui/material";
+import { TextField, Button, Alert, Snackbar, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton } from "@mui/material";
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import Navbar from "./navbar";
 import AboutSection from "./aboutSection";
@@ -24,17 +26,30 @@ const UserProfile = (props: React.PropsWithChildren<UserProfileInterface>) => {
   const [passwordHelpText, setPasswordHelpText] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarText, setSnackbarText] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+
   const [activeTab, setActiveTab] = useState("About");
   const [dataExists, setDataExists] = useState<boolean>(false);
 
+  const closeSnackbar = () => {
+    setShowSnackbar(false);
+    setSnackbarText('');
+  }
+
   const createProfile = () => {
     if (passwordHelpText !== "Your password is secure.") {
-      console.log(passwordHelpText);
+      setSnackbarSeverity("error");
+      setSnackbarText(passwordHelpText);
+      setShowSnackbar(true);
       return;
     }
 
     if (!name) {
-      console.log("Please enter your name.");
+      setSnackbarSeverity("error");
+      setSnackbarText("Please enter your name.");
+      setShowSnackbar(true);
       return;
     }
 
@@ -42,6 +57,10 @@ const UserProfile = (props: React.PropsWithChildren<UserProfileInterface>) => {
     localStorage.setItem("name", encryptedName);
     setDataExists(true);
     setIsAuthenticated(true);
+
+    setSnackbarSeverity("success");
+    setSnackbarText("Your profile was successfully created.");
+    setShowSnackbar(true);
   }
 
   const login = () => {
@@ -56,6 +75,12 @@ const UserProfile = (props: React.PropsWithChildren<UserProfileInterface>) => {
   const resetProfile = () => {
     localStorage.removeItem("name");
     localStorage.removeItem("location");
+    localStorage.removeItem("education");
+    localStorage.removeItem("certificates");
+    localStorage.removeItem("workExperiences");
+    localStorage.removeItem("projects");
+    localStorage.removeItem("skills");
+
     setName("");
     setPassword("");
     setDataExists(false);
@@ -107,6 +132,10 @@ const UserProfile = (props: React.PropsWithChildren<UserProfileInterface>) => {
       <div className="profile-container">
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} isAuthenticated={isAuthenticated} hideUserProfile={hideUserProfile}></Navbar>
 
+        <Snackbar open={showSnackbar} onClose={closeSnackbar} autoHideDuration={6000}>
+          <Alert severity={snackbarSeverity === "success" ? "success" : "error"}>{snackbarText}</Alert>
+        </Snackbar>
+
         {!isAuthenticated &&
           <div className="section-container">
             <div className="section-header">
@@ -121,16 +150,30 @@ const UserProfile = (props: React.PropsWithChildren<UserProfileInterface>) => {
 
             <div className="wrapper">
               {dataExists ? 
-                <div>
-                  <TextField
-                    className="account-input-field"
-                    label="Password"
-                    placeholder="Enter your password..."
-                    type={showPassword ? "text" : "password"}
-                    autoComplete="current-password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+                <div className="profile-wrapper">
+                  <FormControl className="account-input-field" variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                    <OutlinedInput
+                      id="outlined-adornment-password"
+                      type={showPassword ? 'text' : 'password'}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label={
+                              showPassword ? 'hide the password' : 'display the password'
+                            }
+                            onClick={() => setShowPassword(!showPassword)}
+                            edge="end"
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
+                      placeholder="Enter your password..."
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </FormControl>
 
                   <div className="login-wrapper">
                     <Button 
@@ -140,17 +183,23 @@ const UserProfile = (props: React.PropsWithChildren<UserProfileInterface>) => {
                     >
                       Log In
                     </Button>
+                    
+                    <p className="password-help-text">
+                      Enter your password to access your profile. 
+                    </p>
+
+                    <p className="reset-profile-text">
+                      If you forgot it, you will have to reset your profile.
+                    </p>
 
                     <Button
-                      className="exit-cv-button"
+                      className="add-button"
                       variant="outlined"
                       color="error"
                       onClick={resetProfile}
                     >
                       Reset Profile
                     </Button>
-                    
-                    <p>Enter yor password to access your profile. If you forgot it, you will have to reset your profile.</p>
                   </div>
                 </div> :
                 <div className="profile-wrapper">
@@ -164,24 +213,36 @@ const UserProfile = (props: React.PropsWithChildren<UserProfileInterface>) => {
                       onChange={(e) => setName(e.target.value)}
                     />
                     
-                    <div className="password-wrapper">
-                      <div className="password-input-wrapper">
-                        <TextField
-                          className="account-input-field"
-                          label="Password"
-                          placeholder="Enter your password..."
-                          type={showPassword ? "text" : "password"}
-                          autoComplete="current-password"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
+                    <FormControl className="account-input-field" variant="outlined">
+                      <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                      <OutlinedInput
+                        id="outlined-adornment-password"
+                        type={showPassword ? 'text' : 'password'}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label={
+                                showPassword ? 'hide the password' : 'display the password'
+                              }
+                              onClick={() => setShowPassword(!showPassword)}
+                              edge="end"
+                            >
+                              {showPassword ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                        label="Password"
+                        placeholder="Enter your password..."
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </FormControl>
 
-                        <p className="show-password-text">Show Password</p>
-                        <Checkbox onClick={() => setShowPassword(!showPassword)}/>
-                      </div>
-
-                      <p className="password-help-text">{passwordHelpText}</p>
-                    </div>
+                    <p 
+                      className="password-help-text"
+                      style={{color: passwordHelpText === "Your password is secure." ? "blue" : "red"}}
+                    >
+                      {passwordHelpText}
+                    </p>
                   </div>
 
                   <div className="profile-create-wrapper">
@@ -193,7 +254,11 @@ const UserProfile = (props: React.PropsWithChildren<UserProfileInterface>) => {
                       Create Profile
                     </Button>
                     
-                    <p>Please remember your password in order to access your profile in the future. If you forget it, you will have to reset your profile.</p>
+                    <p>
+                      Please remember your password in order to access your profile in the future. 
+                      <br></br>
+                      If you forget it, you will have to reset your profile.
+                    </p>
                   </div>
                 </div>
               }
