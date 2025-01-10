@@ -1,4 +1,3 @@
-/* Overlay styling */
 .overlay {
   display: flex;
   justify-content: center;
@@ -14,7 +13,55 @@
   box-sizing: border-box;
 }
 
-/* Profile container styling */
+.profile-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 40%;
+  margin: auto;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.27);
+  overflow-y: auto;
+}
+
+.profile-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: auto auto 1rem;
+  width: 100%;
+  height: 100%;
+}
+
+.account-input-field {
+  width: max(50%, 420px);
+  margin: 0.5rem 0;
+}
+
+.password-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.password-input-wrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.show-password-text, .password-help-text {
+  margin: 0 0 0 0.5rem;
+}
+
+.profile-create-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto auto;
+}
+
 .profile-container {
   display: flex;
   width: 95%;
@@ -50,7 +97,6 @@
   margin: 0;
 }
 
-/* Wrapper styling */
 .wrapper {
   display: flex;
   width: calc(100% - 5.5rem);
