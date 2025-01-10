@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button, Divider, TextField } from "@mui/material";
 import { Add, Clear } from "@mui/icons-material";
 import "../styles/resumeSection.css";
+import { encryptData, decryptData } from "../utils/encryption";
 
 interface Entry {
   title: string;
@@ -11,12 +12,18 @@ interface Entry {
   endDate: string;
 }
 
-interface Skill {
+export interface Skill {
   name: string;
   experience: string;
 }
 
-const ResumeSection: React.FC = () => {
+interface ResumeSectionInterface {
+  password: string
+}
+
+const ResumeSection = (props: React.PropsWithChildren<ResumeSectionInterface>) => {
+  const { password } = props;
+
   const defaultEntry: Entry = {
     title: "",
     company: "",
@@ -34,7 +41,7 @@ const ResumeSection: React.FC = () => {
     const savedData = localStorage.getItem(key);
 
     if (savedData) {
-      const parsedData = JSON.parse(savedData);
+      const parsedData = JSON.parse(decryptData(savedData, password) || '');
       if (Array.isArray(parsedData) && parsedData.length > 0) {
         return parsedData;
       }
@@ -57,12 +64,12 @@ const ResumeSection: React.FC = () => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      localStorage.setItem("workExperiences", JSON.stringify(workExperiences));
-      localStorage.setItem("projects", JSON.stringify(projects));
-      localStorage.setItem("skills", JSON.stringify(skills));
+      localStorage.setItem("workExperiences", encryptData(JSON.stringify(workExperiences), password));
+      localStorage.setItem("projects", encryptData(JSON.stringify(projects), password));
+      localStorage.setItem("skills", encryptData(JSON.stringify(skills), password));
     }, 500);
     return () => clearTimeout(timeout);
-  }, [workExperiences, projects, skills]);
+  }, [workExperiences, projects, skills, password]);
 
   const addSkill = () => {
     setSkills([...skills, { name: "", experience: "" }]);
