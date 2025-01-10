@@ -1,11 +1,9 @@
 import CryptoJS from "crypto-js";
 
-// Encrypt data with a password
 export const encryptData = (data: string, password: string): string => {
   return CryptoJS.AES.encrypt(data, password).toString();
 };
 
-// Decrypt data with a password
 export const decryptData = (cipherText: string, password: string): string | null => {
   try {
     const bytes = CryptoJS.AES.decrypt(cipherText, password);
