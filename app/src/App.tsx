@@ -6,60 +6,56 @@ import { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import UserProfile from "./components/userProfile";
 
+import { Skill } from './components/resumeSection';
+
+import { decryptData } from "./utils/encryption";
+
 interface ResponseType {
   error?: string;
-}
-
-interface EducationInterface {
-  degree: string;
-  school: string;
-}
-
-interface CertificateInterface {
-  name: string;
-  issuer: string;
-}
-
-interface Entry {
-  title: string;
-  company?: string;
-  description: string;
-  startDate: string;
-  endDate: string;
-}
-
-interface Skill {
-  name: string;
-  experience: string;
 }
 
 // Constants
 const EXPIRATION_TIME = 3 * 24 * 60 * 60 * 1000; // Expiration time for job data (3 days in milliseconds)
 
 const App = () => {
-  const defaultEntry: Entry = {
-    title: "",
-    company: "",
-    description: "",
-    startDate: "",
-    endDate: "",
-  };
-
-  const defaultSkill: Skill = {
-    name: "",
-    experience: ""
-  }
-
+  const [password, setPassword] = useState('');
   const [showUserProfile, setShowUserProfile] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   
-  const name = localStorage.getItem("name") || "";
-  const location = localStorage.getItem("location") || "";
-  const education: EducationInterface[] = JSON.parse(localStorage.getItem("education") || '[{"degree":"","school":""}]');
-  const certificates: CertificateInterface[] =JSON.parse(localStorage.getItem("certificates") || '[{"name":"","issuer":""}]');
+  // TODO: refactor all of this below
+  const [name, setName] = useState('');
+  const [location, setLocation] = useState('');
+  const [education, setEducation] = useState([]);
+  const [certificates, setCertificates] = useState([]);
+  const [workExperiences, setWorkExperiences] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [skills, setSkills] = useState<Skill[]>([]);
 
-  const workExperiences: Entry[] = JSON.parse(localStorage.getItem("workExperiences") || "[]") || [defaultEntry];
-  const projects: Entry[] = JSON.parse(localStorage.getItem("projects") || "[]") || [defaultEntry];
-  const skills: Skill[] = JSON.parse(localStorage.getItem("skills") || "[]") || [defaultSkill];
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    const encryptedName = localStorage.getItem("name") || '';
+    setName(decryptData(encryptedName, password) || '');
+
+    const encryptedLocation = localStorage.getItem("location") || '';
+    setLocation(decryptData(encryptedLocation, password) || '');
+
+    const encryptedEducation = localStorage.getItem("education") || '';
+    setEducation(JSON.parse(decryptData(encryptedEducation, password) || '[]'));
+
+    const encryptedCertificates = localStorage.getItem("certificates") || '';
+    setCertificates(JSON.parse(decryptData(encryptedCertificates, password) || '[]'));
+
+    const encryptedWorkExperiences = localStorage.getItem("workExperiences") || '';
+    setWorkExperiences(JSON.parse(decryptData(encryptedWorkExperiences, password) || '[]'));
+
+    const encryptedProjects = localStorage.getItem("projects") || '';
+    setProjects(JSON.parse(decryptData(encryptedProjects, password) || '[]'));
+
+    const encryptedSkills = localStorage.getItem("skills") || '';
+    setSkills(JSON.parse(decryptData(encryptedSkills, password) || '[]'));
+
+  }, [isAuthenticated, password]);
 
   const generateCoverLetter = (jobDescription: string) => {
     const userdata = {
@@ -245,7 +241,16 @@ const App = () => {
   return (
     <div className="App">
       {!showUserProfile && <UserPopup showUserProfile={() => setShowUserProfile(true)}/>}
-      {showUserProfile && <UserProfile hideUserProfile={() => setShowUserProfile(false)}/>}
+      
+      {showUserProfile && 
+        <UserProfile 
+          isAuthenticated={isAuthenticated} 
+          setIsAuthenticated={setIsAuthenticated} 
+          password={password} 
+          setPassword={setPassword} 
+          hideUserProfile={() => setShowUserProfile(false)}
+        />
+      }
     </div> 
   )
 };
